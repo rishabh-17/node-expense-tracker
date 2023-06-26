@@ -8,7 +8,7 @@ submitBtn.addEventListener("click",async e=>{
         password : document.querySelector('#password').value,
         confirmPassword : document.querySelector('#confirmPassword').value
     }
-    if (user.password!==user.confirmPassword) {
+    if (user.password!==user.confirmPassword && user.password.length<1) {
         con
         alert('Password and Confirm Password should be the same')
     }
@@ -22,6 +22,7 @@ submitBtn.addEventListener("click",async e=>{
         }
         else{
             alert(data.msg)
+            console.log(data.user)
         }
 
     }

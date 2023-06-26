@@ -23,3 +23,23 @@ exports.signup = async (req, res, next) => {
     next(error);
   }
 };
+
+
+exports.login = async (req, res, next)=>{
+    const email = req.body.email;
+    const password = req.body.password;
+
+    const user= await User.findOne({where:{ email: email}});
+    console.log(user)
+    if (user){
+        if (user.password===password) {
+            res.json({msg : "login successful", login : true, user})
+        }
+        else{
+            res.json({msg : "Enter correct password", login : false})
+        }
+    }
+    else{
+        res.json({msg : "user not found", login : false})
+    }
+}
