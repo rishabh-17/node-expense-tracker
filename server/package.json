@@ -1,0 +1,11 @@
+{
+  "name": "node-expense-tracker",
+  "version": "1.0.0",
+  "description": "expense tracker full stack app using api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hrishabh Tiwari",
+  "license": "ISC"
+}
