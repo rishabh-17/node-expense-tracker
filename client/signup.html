@@ -9,12 +9,12 @@
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
   </head>
   <body>
     <div class="container">
-      <form action="">
+      <form >
         <label for="name" class="form-label">Name</label>
         <input
           type="text"
@@ -46,6 +46,8 @@
           id="confirmPassword"
           aria-describedby="emailHelp"
         />
+
+        <button type="submit" id="signup" class="btn btn-primary">Submit</button>
       </form>
     </div>
     <script
@@ -53,5 +55,6 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+    <script src="signupScript.js"></script>
   </body>
 </html>
