@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <form >
+        <label for="expense" class="form-label fw-bold">Expense</label>
+        <input
+          type="number"
+          class="form-control mb-3"
+          id="expense"
+         
+        />
+
+        <label for="password" class="form-label fw-bold">Description</label>
+        <input
+          type="text"
+          class="form-control mb-3"
+          id="description"
+        />
+
+        <div class="my-3">
+            <label for="category" class="form-label fw-bold">Select Category</label>
+            <select id="category" class="form-select">
+              <option value="petrol">Petrol</option>
+              <option value="movie">Movie</option>
+              <option value="food">Food</option>
+            </select>
+          </div>
+
+        <button type="submit" id="add" class="btn btn-primary my-3">ADD</button>
+      </form>
+
+
+      <table class="table table-primary table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Expense</th>
+            <th scope="col">Description</th>
+            <th scope="col">category</th>
+          </tr>
+        </thead>
+        <tbody id="expenseTable">
+         
+
+        </tbody>
+      </table>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -19,6 +19,7 @@ loginBtn.addEventListener('click',async e=>{
         if (data.login){
             alert(data.msg)
             console.log(data.user)
+            window.location.href = "index.html";
         }
         else{
             alert(data.msg)
