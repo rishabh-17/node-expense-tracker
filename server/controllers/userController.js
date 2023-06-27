@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-
+const bcrypt = require("bcrypt");
 exports.signup = async (req, res, next) => {
   try {
     console.log("signup")
@@ -11,10 +11,12 @@ exports.signup = async (req, res, next) => {
     if (userCheck) {
       res.json({ msg: "email already exist", signup: false });
     } else {
+
+      const hashed = await bcrypt.hash(password, 10)
       const user = await User.create({
         name: name,
         email: email,
-        password: password,
+        password: hashed,
       });
       delete user.password;
       res.json({ msg: "signup Successful", signup: true, user });
@@ -32,7 +34,7 @@ exports.login = async (req, res, next)=>{
     const user= await User.findOne({where:{ email: email}});
     console.log(user)
     if (user){
-        if (user.password===password) {
+        if (bcrypt.compare(user.password, password)) {
             res.json({msg : "login successful", login : true, user})
         }
         else{
