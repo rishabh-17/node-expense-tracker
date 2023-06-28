@@ -14,8 +14,9 @@ loginBtn.addEventListener('click',async e=>{
         alert('email is required')
     }
     else{
-        const {data }= await axios.post("http://localhost:5000/api/auth/login",user)
-        console.log(data)
+        const { data }= await axios.post("http://localhost:5000/api/auth/login",user)
+        console.log(data.token)
+        localStorage.setItem("token",data.token)
         if (data.login){
             alert(data.msg)
             console.log(data.user)

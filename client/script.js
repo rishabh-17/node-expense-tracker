@@ -1,3 +1,7 @@
+
+axios.defaults.headers.common['Authentication'] = localStorage.getItem('token')
+
+
 const addBtn = document.querySelector('#add');
 
 addBtn.addEventListener('click',async e=>{
@@ -21,7 +25,15 @@ addBtn.addEventListener('click',async e=>{
         const {data }= await axios.post("http://localhost:5000/api/expense/addexpense",expenseData)
         console.log(data)
     }
+    location.reload()
 });
+
+
+const deleteExpense = async (id) =>{
+    await axios.delete(`http://localhost:5000/api/expense/deleteexpense/${id}`)
+    console.log('delete')
+    location.reload()
+}
 
 window.addEventListener("load", loadExpense)
 const expenseTable = document.querySelector('#expenseTable')
@@ -31,10 +43,10 @@ async function loadExpense(){
     console.log(data)
     data.forEach(i=>{
        
-        expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td></tr>`
-
+        expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td><td><button onclick="deleteExpense(${i.id})" class="btn btn-close"></button></td></tr>`
     })
 
 }
+
 
 
