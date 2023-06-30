@@ -48,5 +48,31 @@ async function loadExpense(){
 
 }
 
+const rzp = document.querySelector('#rzp')
+rzp.onclick = async e =>{
+    console.log('wertyuio')
+    const response = await axios.get("http://localhost:5000/api/payment/premium")
+    console.log(response)
+    const options = {
+        "key": response.data.key_id,
+        order_id: response.data.order.id,
+        handler : async function(response) {
+            await axios.post("http://localhost:5000/api/payment/updatetransaction",{
+                order_id: response.data.order.id,
+                payment_id: response.razonpay_payment_id
+            })
+            alert("YOu are Premium member now!")
+        }
+    }
 
 
+const rzp1 = new Razorpay(options)
+rzp1.open()
+e.preventDefault()
+
+
+rzp1.on('payment.failure', (response) => {
+    console.log(response)
+    alert('Something went wrong')
+})
+}

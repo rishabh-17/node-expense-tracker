@@ -8,9 +8,11 @@ exports.authentication = (req, res, next) => {
     const user = jwt.verify(token, "secretKey");
     User.findByPk(user.userId).then((user) => {
       req.user = user;
+      
       next();
     });
   } catch (error) {
+    console.log("first error")
     console.log(error);
     return res.status(401).json({ success: false });
   }

@@ -3,20 +3,25 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
+const paymentRoutes = require('./routes/paymentRoutes')
 const app = express();
 const sequelize = require('./utils/db')
 const User = require('./models/userModel')
 const Expense = require('./models/expenseModel')
-
+const Order = require('./models/orderModel')
 app.use(cors());
 app.use(bodyParser.json());
 
 //  Routes
 app.use("/api/auth", userRoutes); 
 app.use("/api/expense", expenseRoutes);
+app.use("/api/payment", paymentRoutes);
 
 User.hasMany(Expense)
 Expense.belongsTo(User)
+
+User.hasMany(Order)
+Order.belongsTo(User)
 
 sequelize.sync()
 
