@@ -25,7 +25,8 @@ addBtn.addEventListener('click',async e=>{
         const {data }= await axios.post("http://localhost:5000/api/expense/addexpense",expenseData)
         console.log(data)
     }
-    location.reload()
+    loadExpense()
+    // location.reload()
 });
 
 
@@ -33,6 +34,15 @@ const deleteExpense = async (id) =>{
     await axios.delete(`http://localhost:5000/api/expense/deleteexpense/${id}`)
     console.log('delete')
     location.reload()
+}
+
+const showLeaderboard = async () =>{
+    console.log('leaderboard')
+    const users = await axios.get("http://localhost:5000/api/premium/leaderboard")
+    users.data.forEach(user=>{
+        document.querySelector('#leaderboard').innerHTML = `Name - ${user.name} || Expense - ${user.totalExpense || 0 }`
+
+    })
 }
 
 window.addEventListener("load", loadExpense)
@@ -45,6 +55,14 @@ async function loadExpense(){
        
         expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td><td><button onclick="deleteExpense(${i.id})" class="btn btn-close"></button></td></tr>`
     })
+    const decodedToken = parseJwt(localStorage.getItem('token'))
+    console.log(decodedToken);
+    if ( decodedToken.isPremiumUser){
+        rzp.style.display = "none"
+        document.querySelector("#message").textContent = "you are premium user"
+        document.querySelector('body').innerHTML += '<button onclick="showLeaderboard()" id="">Leaderboard</button>'
+
+    }
 
 }
 
@@ -97,25 +115,7 @@ function parseJwt (token) {
     return JSON.parse(jsonPayload);
 }
 
-const showLeaderboard = async () =>{
-    console.log('leaderboard')
-    const users = await axios.get("http://localhost:5000/api/premium/leaderboard")
-    users.data.forEach(user=>{
-        document.querySelector('#leaderboard').innerHTML = `Name - ${user.name} || Expense - ${user.expense}`
 
-    })
-}
 
-window.addEventListener('DOMContentLoaded',()=>{
-    const decodedToken = parseJwt(localStorage.getItem('token'))
-    console.log(decodedToken);
-    if ( decodedToken.isPremiumUser){
-        rzp.style.display = "none"
-        document.querySelector("#message").textContent = "you are premium user"
-        document.querySelector('body').innerHTML += '<button onclick="showLeaderboard()" id="">Leaderboard</button>'
-        
-
-    }
-})
 
 

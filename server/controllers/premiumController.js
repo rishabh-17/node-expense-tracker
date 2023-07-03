@@ -7,21 +7,9 @@ exports.leaderboard = async (req, res) => {
     try {
       const user = await User.findAll({
         attributes: [
-          'id',
           'name',
-          [
-            sequelize.fn('sum', sequelize.col('Expenses.expense')),
-            'total_cost',
-          ],
-        ],
-        include: [
-          {
-            model: Expense,
-            attributes: [],
-          },
-        ],
-        group: ['User.id'],
-        order: [['total_cost', 'DESC']]
+          'totalExpense',
+        ]
       });
       console.log(user);
       res.json(user);
