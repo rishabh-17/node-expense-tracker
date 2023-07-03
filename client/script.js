@@ -57,11 +57,20 @@ rzp.onclick = async e =>{
         "key": response.data.key_id,
         order_id: response.data.order.id,
         handler : async function(response) {
+            console.log(options.order_id)
             await axios.post("http://localhost:5000/api/payment/updatetransaction",{
-                order_id: response.data.order.id,
-                payment_id: response.razonpay_payment_id
+                
+                order_id: options.order_id,
+                payment_id: response.razorpay_payment_id
             })
+            console.log('success')
             alert("YOu are Premium member now!")
+            const user = parseJwt(localStorage.getItem('token'))
+            const { data }= await axios.post("http://localhost:5000/api/auth/login",user)
+            console.log(data.token)
+            localStorage.setItem("token",data.token)
+            rzp.style.display = "none"
+            document.querySelector("#message").textContent = "you are premium user"
         }
     }
 
@@ -76,3 +85,32 @@ rzp1.on('payment.failure', (response) => {
     alert('Something went wrong')
 })
 }
+
+
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+const showLeaderboard = async () =>{
+    
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+    const decodedToken = parseJwt(localStorage.getItem('token'))
+    console.log(decodedToken);
+    if ( decodedToken.isPremiumUser){
+        rzp.style.display = "none"
+        document.querySelector("#message").textContent = "you are premium user"
+        document.querySelector('body').innerHTML += '<button onclick="showLeaderboard()" id="">Leaderboard</button>'
+        
+
+    }
+})
+
+

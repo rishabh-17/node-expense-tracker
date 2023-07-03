@@ -37,7 +37,7 @@ exports.login = async (req, res, next)=>{
     console.log(user)
     if (user){
         if (bcrypt.compare(user.password, password)) {
-            res.json({msg : "login successful", login : true, user, token : getAccessToken(user.id, user.name)})
+            res.json({msg : "login successful", login : true, user, token : getAccessToken(user.id, user.name, user.isPremiumUser)})
             
         }
         else{
@@ -49,6 +49,6 @@ exports.login = async (req, res, next)=>{
     }
 }
 
-function getAccessToken(id,name){
-  return jwt.sign({userId: id, name: name},'secretKey')
+function getAccessToken(id,name, isPremiumUser){
+  return jwt.sign({userId: id, name: name, isPremiumUser: isPremiumUser},'secretKey')
 }

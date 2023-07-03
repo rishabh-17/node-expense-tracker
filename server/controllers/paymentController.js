@@ -1,6 +1,7 @@
 const Razorpay = require("razorpay")
 const Order = require('../models/orderModel')
-var rzp = new Razorpay({ key_id: 'rzp_test_JgZil736cVGykM', key_secret: 'TJGPCwHi6Ctq9GrJcwtDw34v' })
+var rzp = new Razorpay({ key_id: 'rzp_test_tZAJTAadDARvLv', key_secret: 'DSnXed91UQQUjSPAsyt1bl7m' })
+const User = require("../models/userModel");
 
 exports.purchasePremium = async (req, res) =>{
     try {
@@ -24,10 +25,12 @@ exports.purchasePremium = async (req, res) =>{
 }
 
 
-exports.updateTransaction = (req, res) => {
+exports.updateTransaction =async (req, res) => {
   try {
-    const { orderId, paymentId} = req.body;
-    Order.update({paymentId: paymentId, status: "successful"},{where : {orderId: orderId}})
+    const { order_id, payment_id } = req.body;
+    await Order.update({paymentId: payment_id, status: "successful"},{where : {orderId: order_id}})
+    User.update({isPremiumUser:true}, {where : {email: req.user.email}})
+    await res.json({ status: "successful"})
   } catch (error) {
     
   }
