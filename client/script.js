@@ -98,7 +98,12 @@ function parseJwt (token) {
 }
 
 const showLeaderboard = async () =>{
-    
+    console.log('leaderboard')
+    const users = await axios.get("http://localhost:5000/api/premium/leaderboard")
+    users.data.forEach(user=>{
+        document.querySelector('#leaderboard').innerHTML = `Name - ${user.name} || Expense - ${user.expense}`
+
+    })
 }
 
 window.addEventListener('DOMContentLoaded',()=>{
