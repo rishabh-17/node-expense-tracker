@@ -13,6 +13,29 @@
     <title>Document</title>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <button class="nav-link" id="rzp">Premium</button>
+            <a class="nav-link" href="report.html">Report</a>
+          </div>
+        </div>
+      </div>
+    </nav>
     <div class="container mt-5">
       <form>
         <label for="expense" class="form-label fw-bold">Expense</label>
@@ -52,7 +75,7 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
-    <button id="rzp">premium</button>
+    <!-- <button id="rzp">premium</button> -->
     <div id="message"></div>
     <div id="leaderboard"></div>
     <script src="script.js"></script>

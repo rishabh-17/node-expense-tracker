@@ -16,7 +16,9 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.4.2",
     "razorpay": "^2.8.6",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "sib-api-v3-sdk": "^8.5.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
