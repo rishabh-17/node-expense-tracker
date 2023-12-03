@@ -35,9 +35,24 @@ exports.add = async (req, res, next) => {
 
 exports.getAll = async (req, res, next) => {
   try {
-    req.user.getExpenses().then((data) => {
-      res.json(data);
+    // req.user.getExpenses().then((data) => {
+    //   res.json(data);
+    // });
+    const page = req.query.page;
+    const row = req.query.row;
+    console.log(row, page, (page - 1) * row);
+    // const data = {};
+
+    const data = await Expense.findAndCountAll({
+      where: {
+        UserId: req.user.id,
+      },
+      limit: +row,
+      offset: (page - 1) * row,
     });
+    data.prev = page != 1;
+    data.next = data.count > page * row;
+    res.json(data);
   } catch (error) {
     next(error);
   }

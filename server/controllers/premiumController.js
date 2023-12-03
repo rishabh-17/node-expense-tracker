@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const Expense = require("../models/expenseModel");
 const sequelize = require("../utils/db");
-const uploadS3 = require("../services/aws");
+// const uploadS3 = require("../services/aws");
 exports.leaderboard = async (req, res) => {
   try {
     const user = await User.findAll({

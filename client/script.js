@@ -50,12 +50,14 @@ const expenseTable = document.querySelector("#expenseTable");
 
 async function loadExpense() {
   const { data } = await axios.get(
-    "http://localhost:5000/api/expense/getexpense"
+    "http://localhost:5000/api/expense/getexpense?page=1&row=10"
   );
   console.log(data);
-  data.forEach((i) => {
+  data.rows.forEach((i) => {
     expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td><td><button onclick="deleteExpense(${i.id})" class="btn btn-close"></button></td></tr>`;
   });
+  nextPage.style.display = data.next ? "inline" : "none";
+  prevPage.style.display = data.prev ? "inline" : "none";
   const decodedToken = parseJwt(localStorage.getItem("token"));
   console.log(decodedToken);
   if (decodedToken.isPremiumUser) {
@@ -119,3 +121,60 @@ function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+
+const prevPage = document.getElementById("prevPage");
+const nextPage = document.getElementById("nextPage");
+const pageNo = document.getElementById("pageNo");
+const rowCount = document.getElementById("rowCount");
+pageNo.innerHTML = 1;
+
+rowCount.addEventListener("change", (e) => {
+  console.log(e.target.value);
+  pageNo.innerHTML = 1;
+  expenseTable.innerHTML = "";
+  axios
+    .get(
+      `http://localhost:5000/api/expense/getexpense?page=1&row=${e.target.value}`
+    )
+    .then(({ data }) => {
+      data.rows.forEach((i) => {
+        expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td><td><button onclick="deleteExpense(${i.id})" class="btn btn-close"></button></td></tr>`;
+      });
+      nextPage.style.display = data.next ? "inline" : "none";
+      prevPage.style.display = data.prev ? "inline" : "none";
+    });
+});
+
+prevPage.addEventListener("click", () => {
+  if (pageNo.innerHTML > 0) {
+    pageNo.innerHTML = +pageNo.innerHTML - 1;
+    axios
+      .get(
+        `http://localhost:5000/api/expense/getexpense?page=${pageNo.innerHTML}&row=${rowCount.value}`
+      )
+      .then(({ data }) => {
+        expenseTable.innerHTML = "";
+        data.rows.forEach((i) => {
+          expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td><td><button onclick="deleteExpense(${i.id})" class="btn btn-close"></button></td></tr>`;
+        });
+        nextPage.style.display = data.next ? "inline" : "none";
+        prevPage.style.display = data.prev ? "inline" : "none";
+      });
+  }
+});
+
+nextPage.addEventListener("click", () => {
+  pageNo.innerHTML = 1 + +pageNo.innerHTML;
+  axios
+    .get(
+      `http://localhost:5000/api/expense/getexpense?page=${pageNo.innerHTML}&row=${rowCount.value}`
+    )
+    .then(({ data }) => {
+      expenseTable.innerHTML = "";
+      data.rows.forEach((i) => {
+        expenseTable.innerHTML += `<tr><td>${i.expense}</td><td>${i.description}</td><td>${i.category}</td><td><button onclick="deleteExpense(${i.id})" class="btn btn-close"></button></td></tr>`;
+      });
+      nextPage.style.display = data.next ? "inline" : "none";
+      prevPage.style.display = data.prev ? "inline" : "none";
+    });
+});
