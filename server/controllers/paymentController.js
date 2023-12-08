@@ -1,8 +1,8 @@
 const Razorpay = require("razorpay");
 const Order = require("../models/orderModel");
 var rzp = new Razorpay({
-  key_id: "rzp_test_tZAJTAadDARvLv",
-  key_secret: "DSnXed91UQQUjSPAsyt1bl7m",
+  key_id: process.env.RZP_ID,
+  key_secret: process.env.RZP_KEY,
 });
 const sequelize = require("../utils/db");
 const User = require("../models/userModel");

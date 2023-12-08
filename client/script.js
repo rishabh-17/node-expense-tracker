@@ -18,7 +18,7 @@ addBtn.addEventListener("click", async (e) => {
     alert("Category is required");
   } else {
     const { data } = await axios.post(
-      "http://localhost:5000/api/expense/addexpense",
+      "https://localhost:5000/api/expense/addexpense",
       expenseData
     );
     console.log(data);
@@ -28,7 +28,7 @@ addBtn.addEventListener("click", async (e) => {
 });
 
 const deleteExpense = async (id) => {
-  await axios.delete(`http://localhost:5000/api/expense/deleteexpense/${id}`);
+  await axios.delete(`https://localhost:5000/api/expense/deleteexpense/${id}`);
   console.log("delete");
   location.reload();
 };
@@ -36,7 +36,7 @@ const deleteExpense = async (id) => {
 const showLeaderboard = async () => {
   console.log("leaderboard");
   const users = await axios.get(
-    "http://localhost:5000/api/premium/leaderboard"
+    "https://localhost:5000/api/premium/leaderboard"
   );
   users.data.forEach((user) => {
     document.querySelector("#leaderboard").innerHTML = `Name - ${
@@ -50,7 +50,7 @@ const expenseTable = document.querySelector("#expenseTable");
 
 async function loadExpense() {
   const { data } = await axios.get(
-    "http://localhost:5000/api/expense/getexpense?page=1&row=10"
+    "https://localhost:5000/api/expense/getexpense?page=1&row=10"
   );
   console.log(data);
   data.rows.forEach((i) => {
@@ -71,14 +71,16 @@ async function loadExpense() {
 const rzp = document.querySelector("#rzp");
 rzp.onclick = async (e) => {
   console.log("wertyuio");
-  const response = await axios.get("http://localhost:5000/api/payment/premium");
+  const response = await axios.get(
+    "https://localhost:5000/api/payment/premium"
+  );
   console.log(response);
   const options = {
     key: response.data.key_id,
     order_id: response.data.order.id,
     handler: async function (response) {
       console.log(options.order_id);
-      await axios.post("http://localhost:5000/api/payment/updatetransaction", {
+      await axios.post("https://localhost:5000/api/payment/updatetransaction", {
         order_id: options.order_id,
         payment_id: response.razorpay_payment_id,
       });
@@ -86,7 +88,7 @@ rzp.onclick = async (e) => {
       alert("You are Premium member now!");
       const user = parseJwt(localStorage.getItem("token"));
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://localhost:5000/api/auth/login",
         user
       );
       console.log(data.token);
@@ -134,7 +136,7 @@ rowCount.addEventListener("change", (e) => {
   expenseTable.innerHTML = "";
   axios
     .get(
-      `http://localhost:5000/api/expense/getexpense?page=1&row=${e.target.value}`
+      `https://localhost:5000/api/expense/getexpense?page=1&row=${e.target.value}`
     )
     .then(({ data }) => {
       data.rows.forEach((i) => {
@@ -150,7 +152,7 @@ prevPage.addEventListener("click", () => {
     pageNo.innerHTML = +pageNo.innerHTML - 1;
     axios
       .get(
-        `http://localhost:5000/api/expense/getexpense?page=${pageNo.innerHTML}&row=${rowCount.value}`
+        `https://localhost:5000/api/expense/getexpense?page=${pageNo.innerHTML}&row=${rowCount.value}`
       )
       .then(({ data }) => {
         expenseTable.innerHTML = "";
@@ -167,7 +169,7 @@ nextPage.addEventListener("click", () => {
   pageNo.innerHTML = 1 + +pageNo.innerHTML;
   axios
     .get(
-      `http://localhost:5000/api/expense/getexpense?page=${pageNo.innerHTML}&row=${rowCount.value}`
+      `https://localhost:5000/api/expense/getexpense?page=${pageNo.innerHTML}&row=${rowCount.value}`
     )
     .then(({ data }) => {
       expenseTable.innerHTML = "";
