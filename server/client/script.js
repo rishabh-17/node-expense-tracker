@@ -1,3 +1,7 @@
+if (!localStorage.getItem("token")) {
+  window.location.replace("/login.html");
+}
+
 axios.defaults.headers.common["Authentication"] = localStorage.getItem("token");
 
 const addBtn = document.querySelector("#add");
