@@ -45,7 +45,7 @@ Expense.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
 
-sequelize.sync({ focus: true });
+sequelize.sync();
 // app.listen(port, () => {
 //   console.log(`listening on port http://localhost:${port}`);
 // });

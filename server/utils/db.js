@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(
-  "expense-tracker",
+  "mysql",
   process.env.DB_USER_NAME,
   process.env.DB_PASSWORD,
   {
